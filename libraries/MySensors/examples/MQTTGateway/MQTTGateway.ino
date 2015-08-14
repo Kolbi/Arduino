@@ -118,7 +118,7 @@ byte TCP_MAC[] = { 0x02, 0xDE, 0xAD, 0x00, 0x00, 0x42 };	// Mac-address - You sh
 //////////////////////////////////////////////////////////////////
 
 // NRFRF24L01 radio driver (set low transmit power by default) 
-MyTransportNRF24 transport(RF24_CE_PIN, RF24_CS_PIN, RF24_PA_LEVEL_GW);  
+MyTransportNRF24 transport(RADIO_CE_PIN, RADIO_SPI_SS_PIN, RF24_PA_LEVEL_GW);  
 //MyTransportRFM69 transport;
 
 // Message signing driver (signer needed if MY_SIGNING_FEATURE is turned on in MyConfig.h)
@@ -279,6 +279,7 @@ void processMQTTMessage(char *inputString, uint8_t inputPos) {
 	uint8_t i = 0;
 	buffer[0]= 0;
 	buffsize = 0;
+	(void)inputPos;
 
 	if ((uint8_t)inputString[0] >> 4 == MQTTCONNECT) {
 		buffer[buffsize++] = MQTTCONNACK << 4;
@@ -336,7 +337,7 @@ void processMQTTMessage(char *inputString, uint8_t inputPos) {
 			} else if (i==2) {
 				msg.sensor = atoi(str);		//SensorID
 			} else if (i==3) {
-				char match=255;			//SensorType
+				unsigned char match=255;			//SensorType
 #ifdef MQTT_TRANSLATE_TYPES				
 
 				for (uint8_t j=0; strcpy_P(convBuf, (char*)pgm_read_word(&(vType[j]))) ; j++) {
@@ -348,7 +349,7 @@ void processMQTTMessage(char *inputString, uint8_t inputPos) {
 				}
 
 #endif
-                                if ( atoi(str)!=0 || str=="0" ) {
+                                if ( atoi(str)!=0 || (str[0]=='0' && str[1] =='\0') ) {
 					match=atoi(str);
 				}
 

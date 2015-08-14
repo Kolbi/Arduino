@@ -33,6 +33,8 @@
 #include "MySigningAtsha204Soft.h"
 #include "utility/sha256.h"
 
+#define SIGNING_IDENTIFIER (1)
+
 // Uncomment this to get some useful serial debug info (Serial.print and Serial.println expected)
 //#define DEBUG_SIGNING
 
@@ -61,6 +63,9 @@ static void DEBUG_SIGNING_PRINTBUF(const __FlashStringHelper* str, uint8_t* buf,
 #define DEBUG_SIGNING_PRINTBUF(str, buf, sz)
 #endif
 
+// Initialize hmacKey from MyConfig.h (codebender didn't like static initialization in constructor)
+uint8_t MySigningAtsha204Soft::hmacKey[32] = { MY_HMAC_KEY };
+
 MySigningAtsha204Soft::MySigningAtsha204Soft(bool requestSignatures,
 #ifdef MY_SECURE_NODE_WHITELISTING
 	uint8_t nof_whitelist_entries, const whitelist_entry_t* the_whitelist,
@@ -69,16 +74,14 @@ MySigningAtsha204Soft::MySigningAtsha204Soft(bool requestSignatures,
 	uint8_t randomseedPin)
 	:
 	MySigning(requestSignatures),
-	rndPin(randomseedPin),
-	hmacKey({MY_HMAC_KEY}),
 #ifdef MY_SECURE_NODE_WHITELISTING
 	whitlist_sz(nof_whitelist_entries),
 	whitelist(the_whitelist),
 	node_serial_info(the_serial),
 #endif
+	Sha256(),
 	verification_ongoing(false),
-	Sha256()
-
+	rndPin(randomseedPin)
 {
 }
 

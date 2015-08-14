@@ -37,8 +37,6 @@
 #include "utility/sha256.h"
 #include <stdint.h>
 
-#define SIGNING_IDENTIFIER (1)
-
 #ifdef MY_SECURE_NODE_WHITELISTING
 typedef struct {
 	uint8_t nodeId;
@@ -73,7 +71,7 @@ private:
 	bool verification_ongoing;
 	uint8_t current_nonce[NONCE_NUMIN_SIZE_PASSTHROUGH];
 	uint8_t temp_message[32];
-	uint8_t hmacKey[32];
+	static uint8_t hmacKey[32];
 	uint8_t rndPin;
 	uint8_t hmac[32];
 	void calculateSignature(MyMessage &msg);
