@@ -95,7 +95,7 @@ void setup()
   gw.begin();
 
   // Send the sketch version information to the gateway and Controller
-  gw.sendSketchInfo("Air Quality Sensor", "1.0");
+  gw.sendSketchInfo("Air Quality Sensor", "1.1");
 
   // Register all sensors to gateway (they will be created as child devices)
   gw.present(CHILD_ID_MQ, S_AIR_QUALITY);
