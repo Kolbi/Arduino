@@ -62,12 +62,12 @@ float Ro = 10000.0;    // this has to be tuned 10K Ohm
 int val = 0;           // variable to store the value coming from the sensor
 float valMQ =0.0;
 float lastMQ =0.0;
-/Start Test
+//Start Test
 float valMQ2 =0.0;
 float lastMQ2 =0.0;
 float valMQ3 =0.0;
 float lastMQ3 =0.0;
-/Ende Test
+//Ende Test
 float           LPGCurve[3]  =  {2.3,0.21,-0.47};   //two points are taken from the curve. 
                                                     //with these two points, a line is formed which is "approximately equivalent"
                                                     //to the original curve. 
@@ -84,10 +84,10 @@ float           SmokeCurve[3] ={2.3,0.53,-0.44};    //two points are taken from 
 
 MySensor gw;
 MyMessage msg(CHILD_ID_MQ, V_LEVEL);
-/Start Test
+//Start Test
 MyMessage msgLPG(CHILD_ID_LPG, V_VAR1);
 MyMessage msgSMOKE(CHILD_ID_SMOKE, V_VAR2);
-/Ende Test
+//Ende Test
 
 
 void setup()  
@@ -111,10 +111,10 @@ void setup()
 void loop()      
 {     
   uint16_t valMQ = MQGetGasPercentage(MQRead(MQ_SENSOR_ANALOG_PIN)/Ro,GAS_CO);
-  /Start Test
+  //Start Test
   uint16_t valMQ2 = MQGetGasPercentage(MQRead(MQ_SENSOR_ANALOG_PIN)/Ro,GAS_LPG);
   uint16_t valMQ3 = MQGetGasPercentage(MQRead(MQ_SENSOR_ANALOG_PIN)/Ro,GAS_SMOKE);
-  /Ende Test
+  //Ende Test
   Serial.println(val);
   
    Serial.print("LPG:"); 
@@ -130,7 +130,7 @@ void loop()
    Serial.print( "ppm" );
    Serial.print("\n");
   
-  /Start Test
+  //Start Test
   if (valMQ != lastMQ) {
       gw.send(msg.set((int)ceil(valMQ)));
       lastMQ = ceil(valMQ);
@@ -145,7 +145,7 @@ void loop()
       gw.send(msgSMOKE.set((int)ceil(valMQ3)));
       lastMQ3 = ceil(valMQ3);
   }
-  /Ende Test
+  //Ende Test
 
   gw.sleep(SLEEP_TIME); //sleep for: sleepTime 
 }
