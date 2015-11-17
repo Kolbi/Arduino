@@ -99,10 +99,10 @@ void setup()
 
   // Register all sensors to gateway (they will be created as child devices)
   gw.present(CHILD_ID_MQ, S_AIR_QUALITY);
-  /Start Test
+  //Start Test
   gw.present(CHILD_ID_LPG, S_CUSTOM);
   gw.present(CHILD_ID_SMOKE, S_CUSTOM);
-  /Ende Test
+  //Ende Test
 
   Ro = MQCalibration(MQ_SENSOR_ANALOG_PIN);         //Calibrating the sensor. Please make sure the sensor is in clean air 
                                                     //when you perform the calibration  
