@@ -1,39 +1,26 @@
 /*
-
   MQ-7 CO (carbon monoxide) Gas Sensor
   
-  This sketch includes the timer function and the sensor 
-  reading functions.
+  This sketch includes the timer function and the sensor reading functions.
  
-  Sensor must be one time 'burned-in' for 24 hours prior to 
-  general use.  Burn-in consists of 5.0V for 60 sec followed
-  by 1.4V for 90 sec.  You can run this sketch for 24 hours
-  (ignoring the readings / alarms), to burn-in the sensor.
+  Sensor must be one time 'burned-in' for 24 hours prior to general use.  
+  Burn-in consists of 5.0V for 60 sec followed by 1.4V for 90 sec.
+  You can run this sketch for 24 hours (ignoring the readings / alarms), to burn-in the sensor.
   
-  After burn-in, regular use of the sensor consists of 
-  calibration in clean air.  Therafter, the sensor needs 
-  to be subjected to a heating cycle of 5.0V for 60 sec, 
-  followed by 1.4V for 90 sec.  After two heating cycles (5.0 min
-  total), a reading may be taken at the end of the high 5.0V
-  heating cycle, just before transitioning to the low 1.4V
-  heating cycle.  
+  After burn-in, regular use of the sensor consists of calibration in clean air.  
+  Therafter, the sensor needs to be subjected to a heating cycle of 5.0V for 60 sec, followed by 1.4V for 90 sec.  
+  After two heating cycles (5.0 min total), a reading may be taken at the end of the high 5.0V heating cycle, 
+  just before transitioning to the low 1.4V heating cycle.  
   
   This sketch checks for the presense of CO every 20 minutes.  
-  It performs a 2 cycle (5.0 min) warm up (blinking the 
-  green LED), then it takes a sensor reading (blinking the red LED).  
-  If the COG threshold of 50 ppm is exceeded, an alarm condition is
-  set and it persists until the device is reset.  
+  It performs a 2 cycle (5.0 min) warm up (blinking the green LED), then it takes a sensor reading (blinking the red LED).  
+  If the COG threshold of 50 ppm is exceeded, an alarm condition is set and it persists until the device is reset.  
   
-  
-  In the United States, OSHA limits long-term workplace exposure 
-  levels above 50 ppm.  The average level in homes is 0.5-5ppm. 
-  The level near properly adjusted gas stoves in homes and from 
-  modern vehicle exhaust emissions is 5-15ppm. The exhaust from 
-  automobiles in Mexico City central area is 100-200ppm. 
-  The amount of CO that can be created from the exhaust from 
-  a home wood fire is 5000ppm. Concentrations as low as 667ppm 
-  may cause up to 50% of the body's hemoglobin to convert to 
-  carboxyhemoglobin (a level that may result in seizure, 
+  In the United States, OSHA limits long-term workplace exposure levels above 50 ppm.
+  The average level in homes is 0.5-5ppm. The level near properly adjusted gas stoves in homes and from 
+  modern vehicle exhaust emissions is 5-15ppm. The exhaust from automobiles in Mexico City central area is 100-200ppm. 
+  The amount of CO that can be created from the exhaust from a home wood fire is 5000ppm. Concentrations as low as 667ppm 
+  may cause up to 50% of the body's hemoglobin to convert to carboxyhemoglobin (a level that may result in seizure, 
   coma, and death). 
 
   Startup & calibration:
@@ -58,7 +45,6 @@
  
  Written by:  Mark Kiehl
  Source: http://www.savvymicrocontrollersolutions.com/arduino.php?topic=arduino-mq7-CO-gas-sensor
- 
  */
 
 byte pinGreenLED = 2;
