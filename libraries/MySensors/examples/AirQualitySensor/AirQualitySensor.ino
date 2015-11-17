@@ -89,8 +89,8 @@ float           SmokeCurve[3] ={2.3,0.53,-0.44};    //two points are taken from 
 MySensor gw;
 MyMessage msg(CHILD_ID_MQ, V_LEVEL);
 //Start Test
-MyMessage msgLPG(CHILD_ID_LPG, V_VAR1);
-MyMessage msgSMOKE(CHILD_ID_SMOKE, V_VAR2);
+MyMessage msgLPG(CHILD_ID_LPG, V_LEVEL);
+MyMessage msgSMOKE(CHILD_ID_SMOKE, V_LEVEL);
 //Ende Test
 
 
@@ -104,8 +104,8 @@ void setup()
   // Register all sensors to gateway (they will be created as child devices)
   gw.present(CHILD_ID_MQ, S_AIR_QUALITY);
   //Start Test
-  gw.present(CHILD_ID_LPG, S_CUSTOM);
-  gw.present(CHILD_ID_SMOKE, S_CUSTOM);
+  gw.present(CHILD_ID_LPG, S_AIR_QUALITY);
+  gw.present(CHILD_ID_SMOKE, S_AIR_QUALITY);
   //Ende Test
 
   Ro = MQCalibration(MQ_SENSOR_ANALOG_PIN);         //Calibrating the sensor. Please make sure the sensor is in clean air 
