@@ -38,7 +38,11 @@
 #include <MySensor.h>  
 #include <Wire.h> 
 
-#define 	CHILD_ID_MQ                   0 
+#define 	CHILD_ID_MQ                   0
+//START TEST
+#define 	CHILD_ID_LPQ                  1 
+#define 	CHILD_ID_SMOKE                2 
+//ENDE TEST
 /************************Hardware Related Macros************************************/
 #define 	MQ_SENSOR_ANALOG_PIN         (0)  //define which analog input channel you are going to use
 #define         RL_VALUE                     (5)     //define the load resistance on the board, in kilo ohms
