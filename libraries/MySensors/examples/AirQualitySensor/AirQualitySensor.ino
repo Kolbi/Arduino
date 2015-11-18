@@ -40,7 +40,7 @@
 
 #define 	CHILD_ID_MQ                   0
 //START TEST
-#define 	CHILD_ID_LPQ                  1 
+#define 	CHILD_ID_LPG                  1 
 #define 	CHILD_ID_SMOKE                2 
 //ENDE TEST
 /************************Hardware Related Macros************************************/
