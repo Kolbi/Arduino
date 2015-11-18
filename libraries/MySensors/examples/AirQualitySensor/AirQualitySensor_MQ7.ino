@@ -46,6 +46,15 @@
  Written by:  Mark Kiehl
  Source: http://www.savvymicrocontrollersolutions.com/arduino.php?topic=arduino-mq7-CO-gas-sensor
  */
+ 
+// My Sensor Stuff //
+#include <SPI.h>
+#include <MySensor.h>
+#include <Wire.h>
+#define 	CHILD_ID_MQ                   0
+MySensor gw;
+MyMessage msg(CHILD_ID_MQ, V_LEVEL);
+// My Sensor Stuff //
 
 byte pinGreenLED = 2;
 byte pinRedLED = 4;
@@ -103,6 +112,14 @@ DHT dht(pinDHT, DHTTYPE);
 
 
 void setup() {
+  // My Sensor Stuff //
+  gw.begin();
+  // Send the sketch version information to the gateway and Controller
+  gw.sendSketchInfo("Air Quality Sensor MQ7", "1.0");
+  // Register all sensors to gateway (they will be created as child devices)
+  gw.present(CHILD_ID_MQ, S_AIR_QUALITY);
+  // My Sensor Stuff //
+  
   pinMode(pinGreenLED, OUTPUT);
   delay(1);
   pinMode(pinRedLED, OUTPUT);
@@ -271,6 +288,11 @@ void loop() {
         Serial.print("Rs = ");
         Serial.println(CalcRsFromVo(mV));
         Serial.println("  ");
+        
+        // My Sensor Stuff //
+		    gw.send(msg.set(CalcRsFromVo(mV)));
+		    // My Sensor Stuff //
+        
         mV = 0.0;
         samples = 0;
       }
