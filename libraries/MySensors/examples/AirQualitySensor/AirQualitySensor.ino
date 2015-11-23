@@ -39,10 +39,9 @@
 #include <Wire.h> 
 
 #define 	CHILD_ID_MQ                   0
-//START TEST
 #define 	CHILD_ID_LPG                  1 
 #define 	CHILD_ID_SMOKE                2 
-//ENDE TEST
+
 /************************Hardware Related Macros************************************/
 #define 	MQ_SENSOR_ANALOG_PIN         (0)  //define which analog input channel you are going to use
 #define         RL_VALUE                     (5)     //define the load resistance on the board, in kilo ohms
@@ -66,12 +65,11 @@ float Ro = 10000.0;    // this has to be tuned 10K Ohm
 int val = 0;           // variable to store the value coming from the sensor
 float valMQ =0.0;
 float lastMQ =0.0;
-//Start Test
 float valMQ2 =0.0;
 float lastMQ2 =0.0;
 float valMQ3 =0.0;
 float lastMQ3 =0.0;
-//Ende Test
+
 float           LPGCurve[3]  =  {2.3,0.21,-0.47};   //two points are taken from the curve. 
                                                     //with these two points, a line is formed which is "approximately equivalent"
                                                     //to the original curve. 
@@ -85,14 +83,10 @@ float           SmokeCurve[3] ={2.3,0.53,-0.44};    //two points are taken from 
                                                     //to the original curve.
                                                     //data format:{ x, y, slope}; point1: (lg200, 0.53), point2:(lg10000,-0.22)                                                     
 
-
 MySensor gw;
 MyMessage msg(CHILD_ID_MQ, V_LEVEL);
-//Start Test
 MyMessage msgLPG(CHILD_ID_LPG, V_LEVEL);
 MyMessage msgSMOKE(CHILD_ID_SMOKE, V_LEVEL);
-//Ende Test
-
 
 void setup()  
 { 
@@ -103,10 +97,8 @@ void setup()
 
   // Register all sensors to gateway (they will be created as child devices)
   gw.present(CHILD_ID_MQ, S_AIR_QUALITY);
-  //Start Test
   gw.present(CHILD_ID_LPG, S_AIR_QUALITY);
   gw.present(CHILD_ID_SMOKE, S_AIR_QUALITY);
-  //Ende Test
 
   Ro = MQCalibration(MQ_SENSOR_ANALOG_PIN);         //Calibrating the sensor. Please make sure the sensor is in clean air 
                                                     //when you perform the calibration  
@@ -115,41 +107,38 @@ void setup()
 void loop()      
 {     
   uint16_t valMQ = MQGetGasPercentage(MQRead(MQ_SENSOR_ANALOG_PIN)/Ro,GAS_CO);
-  //Start Test
   uint16_t valMQ2 = MQGetGasPercentage(MQRead(MQ_SENSOR_ANALOG_PIN)/Ro,GAS_LPG);
   uint16_t valMQ3 = MQGetGasPercentage(MQRead(MQ_SENSOR_ANALOG_PIN)/Ro,GAS_SMOKE);
-  //Ende Test
+
   Serial.println(val);
   
    Serial.print("LPG:"); 
-   Serial.print(MQGetGasPercentage(MQRead(MQ_SENSOR_ANALOG_PIN)/Ro,GAS_LPG) );
+   Serial.print(valMQ2);
    Serial.print( "ppm" );
    Serial.print("    ");   
    Serial.print("CO:"); 
-   Serial.print(MQGetGasPercentage(MQRead(MQ_SENSOR_ANALOG_PIN)/Ro,GAS_CO) );
+   Serial.print(valMQ);
    Serial.print( "ppm" );
    Serial.print("    ");   
    Serial.print("SMOKE:"); 
-   Serial.print(MQGetGasPercentage(MQRead(MQ_SENSOR_ANALOG_PIN)/Ro,GAS_SMOKE) );
+   Serial.print(valMQ3);
    Serial.print( "ppm" );
    Serial.print("\n");
   
-  //Start Test
   if (valMQ != lastMQ) {
-      gw.send(msg.set((int)ceil(valMQ)));
-      lastMQ = ceil(valMQ);
+      gw.send(msg.set(valMQ));
+      lastMQ = valMQ;
   }
   
   if (valMQ2 != lastMQ2) {
-      gw.send(msgLPG.set((int)ceil(valMQ2)));
-      lastMQ2 = ceil(valMQ2);
+      gw.send(msgLPG.set(valMQ2));
+      lastMQ2 = valMQ2;
   }
   
   if (valMQ3 != lastMQ3) {
-      gw.send(msgSMOKE.set((int)ceil(valMQ3)));
-      lastMQ3 = ceil(valMQ3);
+      gw.send(msgSMOKE.set(valMQ3));
+      lastMQ3 = valMQ3;
   }
-  //Ende Test
 
   gw.sleep(SLEEP_TIME); //sleep for: sleepTime 
 }
