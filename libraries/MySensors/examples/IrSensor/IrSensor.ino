@@ -45,7 +45,7 @@ IRdecode decoder;
 //decode_results results;
 unsigned int Buffer[RAWBUF];
 MySensor gw;
-MyMessage msg(CHILD_1, V_VAR1);
+MyMessage msg(CHILD_1, V_IR_SEND);
 
 void setup()  
 {  
@@ -57,7 +57,7 @@ void setup()
   gw.sendSketchInfo("IR Sensor", "1.0");
 
   // Register a sensors to gw. Use binary light for test purposes.
-  gw.present(CHILD_1, S_LIGHT);
+  gw.present(CHILD_1, S_IR);
 }
 
 
@@ -80,7 +80,7 @@ void loop()
 
 void incomingMessage(const MyMessage &message) {
   // We only expect one type of message from controller. But we better check anyway.
-  if (message.type==V_LIGHT) {
+  if (message.type==V_IR_SEND) {
      int incomingRelayStatus = message.getInt();
      if (incomingRelayStatus == 1) {
       irsend.send(NEC, 0x1EE17887, 32); // Vol up yamaha ysp-900
