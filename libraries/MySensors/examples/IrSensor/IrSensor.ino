@@ -80,7 +80,7 @@ void loop()
 
 void incomingMessage(const MyMessage &message) {
   // We only expect one type of message from controller. But we better check anyway.
-  if (message.type==V_IR_SEND) {
+  if (message.type==V_IR_RECEIVE) {
      int incomingRelayStatus = message.getInt();
      if (incomingRelayStatus == 1) {
       irsend.send(NEC, 0x1EE17887, 32); // Vol up yamaha ysp-900
